@@ -3,6 +3,19 @@ rows = 'ABCDEFGHI'
 cols = '123456789'
 
 
+def cross(A, B):
+    "Cross product of elements in A and elements in B."
+    return [s + t for s in A for t in B]
+
+
+boxes = cross(rows, cols)
+row_units = [cross(r, cols) for r in rows]
+column_units = [cross(rows, c) for c in cols]
+square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
+unitlist = row_units + column_units + square_units
+units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
+peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
+
 def assign_value(values, box, value):
     """
     Please use this function to update your values dictionary!
@@ -30,16 +43,33 @@ def naked_twins(values):
     twins = []
 
     # Find all instances of naked twins
-    for val in values:
-        if len(val) == 2:
-            twins.append(val)
-
     # Eliminate the naked twins as possibilities for their peers
 
+    while (True):
+            copy_values = values.copy()
+            for unit in unitlist:
 
-def cross(A, B):
-    "Cross product of elements in A and elements in B."
-    return [s + t for s in A for t in B]
+                # Find all instances of naked twins in a unit
+                naked_twin = [x for x in unit for y in unit if
+                              (len(values[x]) == 2) and (values[x] == values[y]) and x != y]
+                if naked_twin != []:
+
+                    # Digits which need to be replaced in the unit because of naked twin
+                    digits = values[naked_twin[0]]
+
+                    # For every box in the unit, if any of the digits appear in the values[box], replace the value with ''
+                    for digit in digits:
+                        for box in unit:
+                            a = values[box]
+                            if digit in a and box not in naked_twin:
+                                assign_value(values, box, values[box].replace(digit, ''))
+
+            # Checking if board is changing while iterating through the naked twins procedure
+            # If the board is not changing that we are breaking out of the while loop
+            if all([values[x] == copy_values[x] for x in boxes]):
+                break
+    return values
+
 
 
 def grid_values(grid):
@@ -61,15 +91,6 @@ def grid_values(grid):
             values.append(c)
     assert len(values) == 81
     return dict(zip(boxes, values))
-
-
-boxes = cross(rows, cols)
-row_units = [cross(r, cols) for r in rows]
-column_units = [cross(rows, c) for c in cols]
-square_units = [cross(rs, cs) for rs in ('ABC','DEF','GHI') for cs in ('123','456','789')]
-unitlist = row_units + column_units + square_units
-units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
-peers = dict((s, set(sum(units[s],[]))-set([s])) for s in boxes)
 
 
 def display(values):
