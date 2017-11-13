@@ -68,7 +68,8 @@ boxes = cross(rows, cols)
 row_units = [cross(r, cols) for r in rows]
 column_units = [cross(rows, c) for c in cols]
 square_units = [cross(rs, cs) for rs in ('ABC', 'DEF', 'GHI') for cs in ('123', '456', '789')]
-diagonals = [[a[0] + a[1] for a in zip(rows, cols)], [a[0] + a[1] for a in zip(rows, cols[::-1])]]
+# diagonals = [[a[0] + a[1] for a in zip(rows, cols)], [a[0] + a[1] for a in zip(rows, cols[::-1])]]
+diagonals = [[row + col for row, col in zip(rows, cols)], [row + col for row, col in zip(rows, cols[::-1])]]
 
 unitlist = row_units + column_units + square_units + diagonals
 units = dict((s, [u for u in unitlist if s in u]) for s in boxes)
@@ -203,9 +204,10 @@ def solve(grid):
 
 if __name__ == '__main__':
     # diag_sudoku_grid = '9.1....8.8.5.7..4.2.4....6...7......5..............83.3..6......9................'
+    grid = '9.1....8.8.5.7..4.2.4....6...7......5..............83.3..6......9................'
     diag_sudoku_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
-    display(solve(diag_sudoku_grid))
-
+    # display(solve(diag_sudoku_grid))
+    display(solve(grid))
     # try:
     from visualize import visualize_assignments
 
@@ -215,18 +217,3 @@ if __name__ == '__main__':
     # pass
     # except:
     # print('We could not visualize your board due to a pygame issue. Not a problem! It is not a requirement.')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
