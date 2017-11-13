@@ -2,7 +2,10 @@ import solution
 import unittest
 
 
+
+
 class TestNakedTwins(unittest.TestCase):
+
     before_naked_twins_1 = {'I6': '4', 'H9': '3', 'I2': '6', 'E8': '1', 'H3': '5', 'H7': '8', 'I7': '1', 'I4': '8',
                             'H5': '6', 'F9': '7', 'G7': '6', 'G6': '3', 'G5': '2', 'E1': '8', 'G3': '1', 'G2': '8',
                             'G1': '7', 'I1': '23', 'C8': '5', 'I3': '23', 'E5': '347', 'I5': '5', 'C9': '1', 'G9': '5',
@@ -78,6 +81,7 @@ class TestNakedTwins(unittest.TestCase):
 
 
 class TestDiagonalSudoku(unittest.TestCase):
+
     diagonal_grid = '2.............62....1....7...6..8...3...9...7...6..4...4....8....52.............3'
     solved_diag_sudoku = {'G7': '8', 'G6': '9', 'G5': '7', 'G4': '3', 'G3': '2', 'G2': '4', 'G1': '6', 'G9': '5',
                           'G8': '1', 'C9': '6', 'C8': '7', 'C3': '1', 'C2': '9', 'C1': '4', 'C7': '5', 'C6': '3',
@@ -96,3 +100,4 @@ class TestDiagonalSudoku(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
